@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            user-select: none;
+            color: #00c9a9;
+        }
+
+        body {
+            background-color: #383739;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .container {
+            width: 520px;
+            height: 500px;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 50px;
+            background-color: #4e5057;
+            box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+        }
+
+        .header {
+            display: flex;
+            gap: 5px;
+            border: 0px solid;
+            border-radius: 4px
+        }
+
+        .container h2 {
+            font-size: 32px;
+        }
+
+        #bar-wrapper {
+            background-color: #383739;
+            border: 1px solid;
+            border-radius: 4px;
+        }
+
+        #search-bar {
+            background-color: #383739;
+            border: 0px;
+            outline: 0;
+        }
+
+        #search-icon {
+            position: relative;
+            right: 2px;
+        }
+
+        #todos-wrapper {
+            display: flex;
+            gap: 5px;
+        }
+
+        #todosList {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        #todosList i {
+            text-decoration: none !important;
+        }
+
+        #btns-addMenu {
+            display: flex;
+            gap: 15px;
+        }
+
+        .line-through {
+            text-decoration: line-through red 2px solid;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container" id="mainMenu">
+        <h2>Todo List</h2>
+        <div class="header">
+            <div id="bar-wrapper">
+                <input placeholder="Search note..." id="search-bar">
+                <i id="search-icon">ico</i>
+            </div>
+                <label for="filter">Category:</label>
+                <select name="filter" id="filter">
+                    <option value="All">All</option>
+                    <option value="Done">Done</option>
+                    <option value="ToDo">ToDo</option>
+                </select>
+        </div>
+        <div id="todos-wrapper">
+            <ul id="todosList">
+                </li>
+            </ul>
+        </div>
+            <div class="btns-primary-wrapper">
+                <button class="btn-primary" id="deleteAll" onclick="deleteAllItems()">Clear</button>
+                <button class="btn-primary" id="add" onclick="addMenu()">+</button>
+            </div>
+        </div>
+
+    <div class="container" id="addMenu">
+        <input placeholder="Input your notes here." id="inputNotes">
+        <div id="btns-addMenu">
+            <button class="btn-secondary" onclick="cancelItem()">Cancel</button>
+            <button class="btn-secondary" onclick="addItem()">Apply</button>
+        </div>
+    </div>
+</body>
+<script>
+    const input = document.getElementById("inputNotes");
+    const todosList = document.getElementById("todosList");
+    let todosArray = JSON.parse(localStorage.getItem("savedTodos")) || [];
+    console.log(todosArray)
+
+    function addItem() {
+        if (!input.value.trim()) { return }
+
+        const newTodo = {
+            id: todosArray.length,
+            title: input.value,
+            isDone: false
+        }
+
+        todosArray.push(newTodo);
+        saveTodos();
+        renderTodo(newTodo);
+        input.value = "";
+    }
+
+    function renderTodo(todo) {
+        const li = document.createElement('li');
+        li.dataset.id = todo.id
+        li.innerHTML = `${todo.title}
+        <i id="icoDelete" onclick="deleteItem(${todo.id})">Delete</i>
+        <i id="icoDone" onclick="markAsDone(${todo.id})">Mark as Done</i>`;
+
+        if (todo.isDone) {
+            li.classList.add("line-through");
+        }
+        todosList.appendChild(li);
+    }
+
+    function cancelItem() {
+        input.value = ""
+    }
+
+    function deleteItem(id) {
+        todosArray = todosArray.filter(todo => todo.id !== id);
+        saveTodos();
+
+        const li = document.querySelector(`li[data-id="${id}"]`);
+        li.remove();
+    }
+
+    function deleteAllItems() {
+        todosList.innerHTML = "";
+        localStorage.clear();
+    }
+
+    function markAsDone(id) {
+        const todo = todosArray.find(t => t.id === id);
+        console.log(todo);
+        todo.isDone = !todo.isDone;
+        saveTodos();
+
+        const li = document.querySelector(`li[data-id="${id}"]`);
+        console.log(li)
+        li.classList.toggle("line-through");
+    }
+
+    function saveTodos() {
+        localStorage.setItem("savedTodos", JSON.stringify(todosArray));
+    }
+
+    todosArray.forEach(todo => renderTodo(todo));
+
+</script>
+</html>
