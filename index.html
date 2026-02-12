@@ -6,83 +6,104 @@
     <title>Document</title>
     <style>
         * {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            user-select: none;
-            color: #00c9a9;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, sans-serif;
         }
 
         body {
             background-color: #383739;
+            color: #00c9a9;
             min-height: 100vh;
             display: flex;
+            flex-direction: row;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            padding: 20px;
+            gap: 20px;
         }
 
         .container {
-            width: 520px;
-            height: 500px;
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            gap: 50px;
+            width: 100%;
+            max-width: 500px;
+            min-height: 400px;
+            padding: 30px;
             background-color: #4e5057;
-            box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-        }
-
-        .header {
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
             display: flex;
-            gap: 5px;
-            border: 0px solid;
-            border-radius: 4px
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
         }
 
-        .container h2 {
-            font-size: 32px;
-        }
-
-        #bar-wrapper {
-            background-color: #383739;
-            border: 1px solid;
-            border-radius: 4px;
-        }
-
-        #search-bar {
-            background-color: #383739;
-            border: 0px;
-            outline: 0;
-        }
-
-        #search-icon {
-            position: relative;
-            right: 2px;
-        }
-
-        #todos-wrapper {
-            display: flex;
-            gap: 5px;
+        #inputNotes {
+            width: 100%;
+            padding: 12px;
+            background: #383739;
+            border: 1px solid #00c9a9;
+            border-radius: 6px;
+            color: white;
+            outline: none;
         }
 
         #todosList {
+            width: 100%;
             list-style: none;
-            padding: 0;
-            margin: 0;
+        }
+
+        #todosList li {
+            background: #383739;
+            margin-bottom: 10px;
+            padding: 15px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: 0.2s;
         }
 
         #todosList i {
-            text-decoration: none !important;
+            font-style: normal;
+            font-size: 12px;
+            cursor: pointer;
+            margin-left: 10px;
+            padding: 5px 8px;
+            border-radius: 4px;
+            background: rgba(0, 201, 169, 0.1);
         }
 
-        #btns-addMenu {
-            display: flex;
-            gap: 15px;
+        #todosList i:hover {
+            background: #00c9a9;
+            color: #383739;
         }
 
         .line-through {
-            text-decoration: line-through red 2px solid;
+            text-decoration: line-through;
+            opacity: 0.6;
+        }
+
+        button {
+            cursor: pointer;
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: 2px solid #00c9a9;
+            background: transparent;
+            color: #00c9a9;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #00c9a9;
+            color: #383739;
+        }
+
+        #addMenu {
+            width: 300px;
+            min-height: 90px;
+            justify-content: center;
         }
 
     </style>
@@ -90,8 +111,8 @@
 <body>
     <div class="container" id="mainMenu">
         <h2>Todo List</h2>
-        <div class="header">
-            <div id="bar-wrapper">
+        <!-- <div class="header"> -->
+            <!-- <div id="bar-wrapper">
                 <input placeholder="Search note..." id="search-bar">
                 <i id="search-icon">ico</i>
             </div>
@@ -100,11 +121,10 @@
                     <option value="All">All</option>
                     <option value="Done">Done</option>
                     <option value="ToDo">ToDo</option>
-                </select>
-        </div>
+                </select> -->
+        <!-- </div> -->
         <div id="todos-wrapper">
             <ul id="todosList">
-                </li>
             </ul>
         </div>
             <div class="btns-primary-wrapper">
